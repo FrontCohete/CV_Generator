@@ -1,0 +1,50 @@
+@font-face {
+  font-family: 'Black Ops One';
+  src: url('./assets/fonts/BlackOpsOne-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('./assets/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    font-family: 'Black Ops One', sans-serif;
+  }
+  body, p, table, button, a, span {
+    font-family: 'Lato', sans-serif;
+  }
+}
+
+:root {
+  --bg-main: #151d22;
+  --text-main: #EAEFEF;
+  --accent-soft: #F5BB25;
+  --accent-strong: #F5BB25;
+}
+
+.dark {
+  --bg-main: #e0e0e0;
+  --text-main: #2C2C2C;
+  --accent-soft: #853953;
+  --accent-strong: #612D53;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  min-height: 100vh;
+}
