@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom'; 
 import { Home, Moon, Sun, FileText, Edit3, Activity, Lock, Menu, X } from 'lucide-react';
 import './Navbar.css';
 
@@ -18,20 +19,23 @@ export default function Navbar({ theme, toggleTheme }: NavbarProps) {
     <nav className="navbar">
       <div className="navbar-container">
         
-        <button className="icon-btn" aria-label="Volver al inicio">
+        <Link to="/" className="icon-btn" aria-label="Volver al inicio" onClick={() => setIsMenuOpen(false)}>
           <Home size={24} />
-        </button>
+        </Link>
 
         <div className={`nav-center ${isMenuOpen ? 'mobile-open' : ''}`}>
-          <div className="nav-link">
+          
+          <Link to="/build" className="nav-link" onClick={() => setIsMenuOpen(false)} style={{ textDecoration: 'none' }}>
             <FileText size={18} />
             Crear CV
-          </div>
-          <div className="nav-link">
+          </Link>
+          
+          <div className="nav-link"style={{ textDecoration: 'none' }}>
             <Edit3 size={18} />
             Editar CV
           </div>
-          <div className="nav-link disabled" data-tooltip="Próximamente">
+          
+          <div className="nav-link disabled" data-tooltip="Próximamente"style={{ textDecoration: 'none' }}>
             <Activity size={18} />
             Analizar CV
             <Lock size={14} />
