@@ -24,7 +24,6 @@ export default function GenCV_Build() {
   useEffect(() => {
     const observerOptions = {
       root: formAreaRef.current,
-      // Margen para detectar la sección cuando llega cerca de la parte superior, no al centro exacto
       rootMargin: '-10% 0px -80% 0px', 
       threshold: 0
     };
@@ -126,12 +125,33 @@ export default function GenCV_Build() {
     else if (type === 'soft') setFormData(prev => ({ ...prev, softSkills: prev.softSkills.filter(s => s !== itemToRemove) }));
     else setFormData(prev => ({ ...prev, languages: prev.languages.filter(s => s !== itemToRemove) }));
   };
+  
+  // --- VALIDACIÓN Y ENVÍO DEL FORMULARIO ---
   const checkIfFormIsValid = () => {
-    const { personalInfo, education, experience, projects } = formData;
-    if (!personalInfo.firstName.trim() || !personalInfo.lastNameP.trim() || !personalInfo.country.trim() || !personalInfo.state.trim() || !personalInfo.city.trim()) return false;
-    for (const edu of education) { if (!edu.institution.trim() || !edu.faculty.trim() || !edu.degree.trim()) return false; }
-    for (const exp of experience) { if (!exp.company.trim() || !exp.role.trim()) return false; }
-    for (const proj of projects) { if (!proj.name.trim()) return false; }
+    const { personalInfo, education, experience, projects, hardSkills, softSkills, languages } = formData;
+    if (!personalInfo.firstName.trim() || !personalInfo.lastNameP.trim() || 
+        !personalInfo.country.trim() || !personalInfo.state.trim() || !personalInfo.city.trim()) {
+      return false;
+    }
+
+    if (education.length === 0) return false;
+    for (const edu of education) { 
+      if (!edu.institution.trim() || !edu.faculty.trim() || !edu.degree.trim()) return false; 
+    }
+
+    if (experience.length === 0) return false;
+    for (const exp of experience) { 
+      if (!exp.company.trim() || !exp.role.trim()) return false; 
+    }
+
+    for (const proj of projects) { 
+      if (!proj.name.trim()) return false; 
+    }
+
+    if (hardSkills.length === 0) return false;
+    if (softSkills.length === 0) return false;
+    if (languages.length === 0) return false;
+
     return true;
   };
 
@@ -422,9 +442,11 @@ export default function GenCV_Build() {
                   </div>
                 </div>
                 <div className="skills-container">
+
                   {formData.hardSkills.length === 0 ? ( <p className="empty-skills-msg">Aún no has agregado conocimientos técnicos.</p> ) : (
-                    formData.hardSkills.map((skill, idx) => ( <span key={`hs-${idx}`} className="skill-chip hard"> {skill} <button type="button" className="skill-chip-btn" onClick={() => removeItem(skill, 'hard')} title="Eliminar"><Trash2 size={14} /></button> </span> ))
+                    formData.hardSkills.map((skill, idx) => ( <span key={`hs-${idx}`} className="skill-chip soft"> {skill} <button type="button" className="skill-chip-btn" onClick={() => removeItem(skill, 'hard')} title="Eliminar"><Trash2 size={14} /></button> </span> ))
                   )}
+
                 </div>
               </div>
 
