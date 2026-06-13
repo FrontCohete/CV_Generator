@@ -1,6 +1,7 @@
+
 ::-webkit-scrollbar {
-  width: 8px; 
-  height: 12px; 
+  width: 12px; 
+  height: 8px; 
 }
 
 ::-webkit-scrollbar-track {
@@ -50,7 +51,7 @@
   opacity: 0.8;
   max-width: 800px;
   margin: 0 auto;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif; 
 }
 
 .build-layout {
@@ -657,4 +658,3 @@ html {
     height: 4rem;
   }
 }
-
