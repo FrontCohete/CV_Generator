@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { User, GraduationCap, Briefcase, Code, Wrench, Languages, Plus, Trash2, CheckCircle2, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './GenCV_Build.css';
+import { pdf } from '@react-pdf/renderer';
+//import { PDFDownloadLink } from '@react-pdf/renderer';
+import HarvardCV from '../../components/HarvardCV/HarvardCv';
 
 interface Education { id: string; institution: string; faculty: string; degree: string; startDate: string; endDate: string; }
 interface Experience { id: string; company: string; role: string; startDate: string; endDate: string; responsibilities: string; }
@@ -157,10 +160,16 @@ export default function GenCV_Build() {
 
   const isReadyToGenerate = checkIfFormIsValid();
 
-  const handleGenerateCV = (e: React.FormEvent) => {
-    e.preventDefault(); 
-    console.log('Enviando JSON estructurado al Backend:', JSON.stringify(formData, null, 2));
-  };
+  const handleGenerateCV = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const blob = await pdf(<HarvardCV data={formData} />).toBlob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `CV_${formData.personalInfo.firstName || 'CV'}.pdf`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
 
   return (
     <div className="build-wrapper">
